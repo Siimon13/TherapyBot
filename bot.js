@@ -37,8 +37,9 @@ var read = function (sender, message, reply) {
     if (message == 'hello') {
 	// Let's reply back hello
 	message = 'Hello yourself! I am a chat bot. You can say "show me pics of corgis"'
-	
-	reply(sender, message)
+	console.log("Bot should respond with hellomessage");
+	sendTextMessage(sender,message);
+	// reply(sender, message)
     } else {
 	// Let's find the user
 	var sessionId = findOrCreateSession(sender)
@@ -69,9 +70,27 @@ var read = function (sender, message, reply) {
     }
 }
 
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:Config.FB_VERIFY_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
 
 
 module.exports = {
     findOrCreateSession: findOrCreateSession,
-	read: read,
+    read: read,
 }
