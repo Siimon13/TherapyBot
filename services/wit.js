@@ -31,25 +31,27 @@ var actions = {
 		console.log('WIT HAS SOMETHING TO SAY:', message)
 		console.log('WIT HAS A CONTEXT:', context)
 
-		if (checkURL(message)) {
-			FB.newMessage(context._fbid_, message, true)
-		} else {
-			FB.newMessage(context._fbid_, message)
-		}
+	    FB.newMessage(context._fbid_, message, true);
+
+	    if (checkURL(message)) {
+		FB.newMessage(context._fbid_, message, true)
+	    } else {
+		FB.newMessage(context._fbid_, message)
+	    }
 
 		
-		cb()
+	    cb()
 		
 	},
 
-	merge(sessionId, context, entities, message, cb) {
-		// Reset the weather story
-		delete context.forecast
+    merge(sessionId, context, entities, message, cb) {
+	// Reset the weather story
+	delete context.forecast
 
-		// Retrive the location entity and store it in the context field
-		var loc = firstEntityValue(entities, 'location')
-		if (loc) {
-			context.loc = loc
+	// Retrive the location entity and store it in the context field
+	var loc = firstEntityValue(entities, 'location')
+	if (loc) {
+	    context.loc = loc
 		}
 
 		// Reset the cutepics story
