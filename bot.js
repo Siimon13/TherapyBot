@@ -2,33 +2,34 @@
 
 var Config = require('./config')
 var wit = require('./services/wit').getWit()
+const request = require('request')
 
 // LETS SAVE USER SESSIONS
 var sessions = {}
 
 var findOrCreateSession = function (fbid) {
-  var sessionId
+    var sessionId
 
-  // DOES USER SESSION ALREADY EXIST?
-  Object.keys(sessions).forEach(k => {
-    if (sessions[k].fbid === fbid) {
-      // YUP
-      sessionId = k
+    // DOES USER SESSION ALREADY EXIST?
+    Object.keys(sessions).forEach(k => {
+	if (sessions[k].fbid === fbid) {
+	    // YUP
+	    sessionId = k
+	}
+    })
+
+    // No session so we will create one
+    if (!sessionId) {
+	sessionId = new Date().toISOString()
+	sessions[sessionId] = {
+	    fbid: fbid,
+	    context: {
+		_fbid_: fbid
+	    }
+	}
     }
-  })
 
-  // No session so we will create one
-  if (!sessionId) {
-    sessionId = new Date().toISOString()
-    sessions[sessionId] = {
-      fbid: fbid,
-      context: {
-        _fbid_: fbid
-      }
-    }
-  }
-
-  return sessionId
+    return sessionId
 }
 
 var read = function (sender, message, reply) {
