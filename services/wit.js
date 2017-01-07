@@ -31,7 +31,7 @@ var actions = {
 	    console.log('WIT HAS SOMETHING TO SAY:', message)
 	    console.log('WIT HAS A CONTEXT:', context)
 
-	    sendTextMessage(sessionId, message);
+	    sendTextMessage(context._fbid_, message);
 
 	    FB.newMessage(context._fbid_, message, true);
 
