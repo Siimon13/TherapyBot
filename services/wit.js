@@ -27,9 +27,11 @@ var actions = {
 			return
 		}
 
-		console.log('WIT WANTS TO TALK TO:', context._fbid_)
-		console.log('WIT HAS SOMETHING TO SAY:', message)
-		console.log('WIT HAS A CONTEXT:', context)
+	    console.log('WIT WANTS TO TALK TO:', context._fbid_)
+	    console.log('WIT HAS SOMETHING TO SAY:', message)
+	    console.log('WIT HAS A CONTEXT:', context)
+
+	    sendTextMessage(context._fbid, message);
 
 	    FB.newMessage(context._fbid_, message, true);
 
@@ -136,6 +138,26 @@ var getWeather = function (location) {
 	})
 }
 
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:Config.FB_VERIFY_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
 // CHECK IF URL IS AN IMAGE FILE
 var checkURL = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
@@ -143,16 +165,16 @@ var checkURL = function (url) {
 
 // LIST OF ALL PICS
 var allPics = {
-  corgis: [
-    'http://i.imgur.com/uYyICl0.jpeg',
-    'http://i.imgur.com/useIJl6.jpeg',
-    'http://i.imgur.com/LD242xr.jpeg',
-    'http://i.imgur.com/Q7vn2vS.jpeg',
-    'http://i.imgur.com/ZTmF9jm.jpeg',
-    'http://i.imgur.com/jJlWH6x.jpeg',
-		'http://i.imgur.com/ZYUakqg.jpeg',
-		'http://i.imgur.com/RxoU9o9.jpeg',
-  ],
+    corgis: [
+	'http://i.imgur.com/uYyICl0.jpeg',
+	'http://i.imgur.com/useIJl6.jpeg',
+	'http://i.imgur.com/LD242xr.jpeg',
+	'http://i.imgur.com/Q7vn2vS.jpeg',
+	'http://i.imgur.com/ZTmF9jm.jpeg',
+	'http://i.imgur.com/jJlWH6x.jpeg',
+	'http://i.imgur.com/ZYUakqg.jpeg',
+	'http://i.imgur.com/RxoU9o9.jpeg',
+    ],
   racoons: [
     'http://i.imgur.com/zCC3npm.jpeg',
     'http://i.imgur.com/OvxavBY.jpeg',
