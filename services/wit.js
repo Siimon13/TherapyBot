@@ -34,6 +34,11 @@ var actions = {
 	console.log('WIT WANTS TO TALK TO:', context._fbid_)
 	console.log('WIT HAS SOMETHING TO SAY:', message)
 	console.log('WIT HAS A CONTEXT:', context)
+	
+	if (message.includes("END")){
+	    delete sessions[sessionId];
+	}
+	// console.log('Wit has quickreplies', quickreplies)
 
 	sendTextMessage(context._fbid_, message);
 

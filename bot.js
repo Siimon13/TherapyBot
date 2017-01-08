@@ -36,10 +36,11 @@ var read = function (sender, message, reply) {
     console.log(message);
     console.log(message == 'hello');
     console.log(sender);
-    if (message == 'asfasf') {
+    if (message.includes('END')) {
 	// Let's reply back hello
-	message = 'Hello yourself! I am a chat bot. You can say "show me pics of corgis"'
-	console.log("Bot should respond with hellomessage");
+	delete sessions[sessionId];
+	message = "restartomg session";
+	console.log("restarting session");
 	sendTextMessage(sender,message);
 	// reply(sender, message)
     } else {
@@ -47,6 +48,7 @@ var read = function (sender, message, reply) {
 	var sessionId = findOrCreateSession(sender)
 	// Let's forward the message to the Wit.ai bot engine
 	// This will run all actions until there are no more actions left to do
+	// wit.message
 	wit.runActions(
 	    sessionId, // the user's current session by id
 	    message,  // the user's message
