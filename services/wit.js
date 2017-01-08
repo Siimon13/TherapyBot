@@ -20,31 +20,33 @@ var firstEntityValue = function (entities, entity) {
 
 
 var actions = {
-	say (sessionId, context, message, cb) {
-		// Bot testing mode, run cb() and return
-		if (require.main === module) {
-			cb()
-			return
-		}
-
-	    console.log('WIT WANTS TO TALK TO:', context._fbid_)
-	    console.log('WIT HAS SOMETHING TO SAY:', message)
-	    console.log('WIT HAS A CONTEXT:', context)
-
-	    sendTextMessage(context._fbid_, message);
-
-	    FB.newMessage(context._fbid_, message, true);
-
-	    if (checkURL(message)) {
-		FB.newMessage(context._fbid_, message, true)
-	    } else {
-		FB.newMessage(context._fbid_, message)
-	    }
-
-		
+    // say (sessionId, context, message, cb) {
+    say ({sessionId}, response) {
+	// Bot testing mode, run cb() and return
+	if (require.main === module) {
 	    cb()
+	    return
+	}
+	    
+	console.log('WIT has response', response_)
+	console.log('WIT WANTS TO TALK TO:', context._fbid_)
+	console.log('WIT HAS SOMETHING TO SAY:', message)
+	console.log('WIT HAS A CONTEXT:', context)
+
+	sendTextMessage(context._fbid_, message);
+
+	FB.newMessage(context._fbid_, message, true);
+
+	if (checkURL(message)) {
+	    FB.newMessage(context._fbid_, message, true)
+	} else {
+	    FB.newMessage(context._fbid_, message)
+	}
+
 		
-	},
+	cb()
+		
+    },
 
     merge(sessionId, context, entities, message, cb) {
 	// Reset the weather story
@@ -54,56 +56,56 @@ var actions = {
 	var loc = firstEntityValue(entities, 'location')
 	if (loc) {
 	    context.loc = loc
-		}
+	}
 
-		// Reset the cutepics story
-		delete context.pics
+	// Reset the cutepics story
+	delete context.pics
 
-		// Retrieve the category
-		var category = firstEntityValue(entities, 'category')
-		if (category) {
-			context.cat = category
-		}
+	// Retrieve the category
+	var category = firstEntityValue(entities, 'category')
+	if (category) {
+	    context.cat = category
+	}
 
-		// Retrieve the sentiment
-		var sentiment = firstEntityValue(entities, 'sentiment')
-		if (sentiment) {
-			context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
-		} else {
-			delete context.ack
-		}
+	// Retrieve the sentiment
+	var sentiment = firstEntityValue(entities, 'sentiment')
+	if (sentiment) {
+	    context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
+	} else {
+	    delete context.ack
+	}
 
-		cb(context)
-	},
+	cb(context)
+    },
 
-	error(sessionId, context, error) {
-		console.log(error.message)
-	},
+    error(sessionId, context, error) {
+	console.log(error.message)
+    },
 
-	// list of functions Wit.ai can execute
-	['fetch-weather'](sessionId, context, cb) {
-		// Here we can place an API call to a weather service
-		// if (context.loc) {
-		// 	getWeather(context.loc)
-		// 		.then(function (forecast) {
-		// 			context.forecast = forecast || 'sunny'
-		// 		})
-		// 		.catch(function (err) {
-		// 			console.log(err)
-		// 		})
-		// }
+    // list of functions Wit.ai can execute
+    ['fetch-weather'](sessionId, context, cb) {
+	// Here we can place an API call to a weather service
+	// if (context.loc) {
+	// 	getWeather(context.loc)
+	// 		.then(function (forecast) {
+	// 			context.forecast = forecast || 'sunny'
+	// 		})
+	// 		.catch(function (err) {
+	// 			console.log(err)
+	// 		})
+	// }
 
-		context.forecast = 'Sunny'
+	context.forecast = 'Sunny'
 
-		cb(context)
-	},
+	cb(context)
+    },
 
-	['fetch-pics'](sessionId, context, cb) {
-		var wantedPics = allPics[context.cat || 'default']
-		context.pics = wantedPics[Math.floor(Math.random() * wantedPics.length)]
+    ['fetch-pics'](sessionId, context, cb) {
+	var wantedPics = allPics[context.cat || 'default']
+	context.pics = wantedPics[Math.floor(Math.random() * wantedPics.length)]
 
-		cb(context)
-	},
+	cb(context)
+    },
 }
 
 // SETUP THE WIT.AI SERVICE
