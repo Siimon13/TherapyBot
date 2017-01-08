@@ -20,15 +20,16 @@ var firstEntityValue = function (entities, entity) {
 
 
 var actions = {
-    say (sessionId, context, message, cb) {
+    // say (sessionId, context, message, cb) {
+    send({sessionId}, response) {
 	// say ({sessionId}, response) {
 	// Bot testing mode, run cb() and return
 	if (require.main === module) {
 	    cb()
-	    return
-	}
+	return
+    }
 	    
-	// console.log('WIT has response', response_)
+	console.log('WIT has response', response_)
 	console.log('WIT HAS SESSION ID:', sessionId)
 	console.log('WIT WANTS TO TALK TO:', context._fbid_)
 	console.log('WIT HAS SOMETHING TO SAY:', message)
