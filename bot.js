@@ -40,7 +40,7 @@ var read = function (sender, message, reply) {
 	// Let's reply back hello
 	delete sessions[sessionId];
 	message = "restarting session";
-	console.log("restarting session");
+	console.log("Restarting session\nType gimme options");
 	sendTextMessage(sender,message);
 	// reply(sender, message)
     } else {
