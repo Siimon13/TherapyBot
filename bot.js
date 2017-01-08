@@ -39,7 +39,7 @@ var read = function (sender, message, reply) {
     if (message.includes('END')) {
 	// Let's reply back hello
 	delete sessions[sessionId];
-	message = "restarting session";
+	message = "Restarting session\nType gimme options";
 	console.log("Restarting session\nType gimme options");
 	sendTextMessage(sender,message);
 	// reply(sender, message)
