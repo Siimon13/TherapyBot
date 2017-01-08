@@ -145,6 +145,7 @@ var getWeather = function (location) {
 }
 
 function sendTextMessage(sender, text) {
+    console.log(text);
     let messageData = { text:text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
