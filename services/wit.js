@@ -29,7 +29,7 @@ var actions = {
 	}
 	    
 	// console.log('WIT has response', response_)
-	console.log('WIT HAS SESSION ID:', sessionId_)
+	console.log('WIT HAS SESSION ID:', sessionId)
 	console.log('WIT WANTS TO TALK TO:', context._fbid_)
 	console.log('WIT HAS SOMETHING TO SAY:', message)
 	console.log('WIT HAS A CONTEXT:', context)
