@@ -36,7 +36,7 @@ var read = function (sender, message, reply) {
     console.log(message);
     console.log(message == 'hello');
     console.log(sender);
-    if (message == 'hello') {
+    if (message == 'asfasf') {
 	// Let's reply back hello
 	message = 'Hello yourself! I am a chat bot. You can say "show me pics of corgis"'
 	console.log("Bot should respond with hellomessage");
