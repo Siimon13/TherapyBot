@@ -37,7 +37,7 @@ var actions = {
 	
 	if (message.includes("END")){
 	    sendTextMessage(context._fbid_, message);
-	    delete sessionId;
+	    delete sessions[sessionId];
 	}
 	// console.log('Wit has quickreplies', quickreplies)
 
