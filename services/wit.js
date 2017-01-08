@@ -38,13 +38,7 @@ var actions = {
 	// console.log('Wit has quickreplies', quickreplies)
 
 	sendTextMessage(context._fbid_, message);
-
-	if (message.includes("END")){
-	    console.log("should reset");
-	    // sendTextMessage(context._fbid_, message);
-	    // delete sessions[sessionId];
-	}
-
+		
 	// FB.newMessage(context._fbid_, message, true);
 
 	if (checkURL(message)) {
