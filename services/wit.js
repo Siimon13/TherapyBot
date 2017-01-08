@@ -36,13 +36,14 @@ var actions = {
 	console.log('WIT HAS A CONTEXT:', context)
 	
 	if (message.includes("END")){
-	    delete sessions[sessionId];
+	    sendTextMessage(context._fbid_, message);
+	    delete sessionId;
 	}
 	// console.log('Wit has quickreplies', quickreplies)
 
 	sendTextMessage(context._fbid_, message);
 
-	FB.newMessage(context._fbid_, message, true);
+	// FB.newMessage(context._fbid_, message, true);
 
 	if (checkURL(message)) {
 	    FB.newMessage(context._fbid_, message, true)
